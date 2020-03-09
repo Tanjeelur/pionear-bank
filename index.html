@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-area">
+  <div id="login-area">
     <h1 class="text-center">Welcome to Pioneer Bank</h1> 
     <div class="input-area">
         <h4>Login</h4>
@@ -16,8 +16,91 @@
          <br>
          <input type="password"class="form-control" placeholder="password">
          <br>
-         <button class="btn btn-success">Enter</button>
+         <button id="login" class="btn btn-success">Enter</button>
     </div>
   </div> 
+  <div id="tr-area">
+    <div class="row">
+      <div class="col-md-4">
+       <div class="deposit status">
+        <h5>Deposit</h5>
+        <h2>$ <span id="current-deposit">00</span></h2>
+       </div>
+      </div>
+      <div class="col-md-4">
+        <div class="withdraw status">
+          <h5>Withdraw</h5>
+          <h2>$ <span id="current-withdraw">00</span></h2>
+         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="balance status">
+          <h5>Balance</h5>
+          <h2>$ <span id="current-balance">2579</span></h2>
+         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-area">
+          <h4>Deposit</h4>
+        <input id="deposit-amount" type="text" class="form-control" placeholder="$ amount you want to deposit">
+        <br>
+        <button id="add-deposit" class="btn btn-success">Deposit</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-area">
+          <h4>Withdraw</h4>
+        <input id="withdraw-amount" type="text" class="form-control" placeholder="$ amount you want to withdraw">
+        <br>
+        <button id="add-withdraw" class="btn btn-success">withdraw</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const loginbtn = document.getElementById("login");
+    loginbtn.addEventListener("click",function(){
+     const loginarea = document.getElementById("login-area");
+     loginarea.style.display = "none";
+     const trarea = document.getElementById("tr-area");
+     trarea.style.display = "block";
+         })
+         const depositbtn = document.getElementById("add-deposit");
+         depositbtn.addEventListener("click",function(){
+           const depositnumber = getInputValue("deposit-amount");
+
+          updateSpanText("current-deposit", depositnumber);
+          updateSpanText("current-balance", depositnumber);
+           
+           document.getElementById("deposit-amount").value = "";
+
+           const withdrawbtn = document.getElementById("add-withdraw");
+            withdrawbtn.addEventListener("click",function(){
+            const withdrawNumber = getInputValue("withdraw-amount");
+
+            updateSpanText("current-withdraw", withdrawNumber);
+            updateSpanText("current-balance", -1 * withdrawNumber);
+            document.getElementById("withdraw-amount").value = "";
+           })
+         })
+
+
+         function getInputValue(id){
+           amount = document.getElementById(id).value;
+           amountNumber = parseFloat(amount);
+           return amountNumber;
+         }
+
+
+         function updateSpanText(id, depositnumber){
+          const current = document.getElementById(id).innerText;
+           const currentNumber = parseFloat(current);
+           const total = depositnumber + currentNumber;
+
+           document.getElementById(id).innerText = total;
+         }
+  </script>
 </body>
 </html>
